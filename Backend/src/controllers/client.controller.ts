@@ -1,63 +1,95 @@
 import {Request, Response} from 'express'
-import { Client } from '../interfaces/client.interfaces'
-import clientsData from '../data/clients.json'
-import { clientSchema } from '../schemas/client.schemas'
-
-// Casteamos los datos al tipo Client para que TS nos ayude
-const clients: Client[] = clientsData as Client[];
+//import { Client } from '../interfaces/client.interfaces'
+//import clientsData from '../data/clients.json'
+import { clientSchema, updateClientSchema } from '../schemas/client.schemas'
+import { getAllClientsServices, getClientByIdService, createClientService, updateClientService , deleteClientService} from '../services/client.services'
 
 //obtener todos los clientes
-export const getAllClients = (req: Request, res: Response) => {
-    res.status(200).json(clients);
-};
+export const getAllClientsController = async (req: Request, res: Response) => {
+    try{
+        const result = await getAllClientsServices()
+        res.status(200).json(result)
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Error al obtener los clientes'})
+    }
+}
 
 //obtener un cliente por ID
-export const getClientById = (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string, 10)
-    const client = clients.find (c => c.id === id)
-    if (!client) {
-        return res.status(404).json({ message: 'Cliente no encontrado' })
+export const getClientByIdController = async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id as string, 10)
+        if (isNaN(id)) {
+            return res.status(400).json({ message: 'ID inválido'})
+        }
+        const result = await getClientByIdService(id)
+        if (!result) {
+            return res.status(404).json({ message: 'Cliente no encontrado'})
+        }
+        return res.status(200).json(result)
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Error al obtener el cliente'})
     }
-    res.status(200).json(client)
 }
 
 //Crear un nuevo cliente
-export const createClient = (req: Request, res: Response) => {
-    const validation = clientSchema.safeParse(req.body)
-    if ( !validation.success) {
-        return res.status(400).json({ error: validation.error.message})
-    }
+export const createClientController = async (req: Request, res: Response) => {
+    try{
+        const validation = clientSchema.safeParse(req.body)
+        if ( !validation.success) {
+            return res.status(400).json({ error: validation.error.message})
+        }
+        //si estoy aca es porque ya valide los datos
+        const newClient = await createClientService(validation.data)
+        res.status(201).json(newClient)
 
-    //si estamos aca es porque los datos fueron validos
-    const newClient: Client = { //junto los datos validados y el id y date de creacion
-        ...validation.data,
-        id: clients.length + 1,
-        createdAt: new Date()
+    }catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Error al crear el cliente'})
     }
-    //tengo que mandar los datos a la db 
-    clients.push(newClient)
-    res.status(201).json(newClient)
 }
 
-//actualizar un cliente existente 
-export const updateClient = (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string, 10)
-    const clientIndex = clients.findIndex( c => c.id === id) //busca el cliente por id y devuelve la pos 
-    if ( clientIndex === -1 ) {
-        return res.status(404).json({ message: 'Cliente no encontrado'})
+// //actualizar un cliente existente 
+ export const updateClientController = async (req: Request, res: Response) => {
+    try{
+        const id = parseInt(req.params.id as string, 10)
+        if (isNaN(id)) {
+            return res.status(400).json({ message: 'ID inválido'})
+        }
+            // Validar los datos de entrada
+        const validation = updateClientSchema.safeParse(req.body)
+        if (!validation.success) {
+            return res.status(400).json({ error: validation.error.message })
+        }
+        // Aquí iría la lógica para actualizar el cliente en la base de datos
+        const updatedClient = await updateClientService(id , validation.data)
+        if (!updatedClient) {
+            return res.status(404).json({ message: 'Cliente no encontrado' })
+        }
+        res.status(200).json(updatedClient)
+    }catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Error al actualizar el cliente'})
     }
-    const updatedClient = { ...clients[clientIndex], ...req.body }
-    clients[clientIndex] = updatedClient
-    return res.status(200).json({ message: 'Cliente actualizado correctamente', client: updatedClient })
 }
 
-export const deleteClient = (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string, 10)
-    const clientIndex = clients.findIndex( c => c.id === id) //busca el cliente por id y devuelve la pos 
-    if ( clientIndex === -1 ) {
-        return res.status(404).json({ message: 'Cliente no encontrado'})
+ export const deleteClientController = async (req: Request, res: Response) => {
+    try{
+        const id = parseInt(req.params.id as string, 10)
+        if (isNaN(id)) {
+            return res.status(400).json({ message: 'ID inválido'})
+        }
+        
+        const result = await deleteClientService(id)
+            if(! result ) {
+                return res.status(404).json({ message: 'Cliente no encontrado'})
+            }
+        res.status(200).json({ message: 'Cliente eliminado correctamente'})
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ message: 'Error al eliminar el cliente'})
     }
-    clients.splice(clientIndex, 1) //elimina el cliente del array
-    return res.status(200).json({ message: 'Cliente eliminado correctamente'})
-}
+
+ }
 

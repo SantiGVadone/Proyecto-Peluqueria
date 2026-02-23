@@ -5,18 +5,18 @@ const router = Router()
 
 // Rutas para clientes
 // Obtener todos los clientes
-router.get('/', ClientController.getAllClients)
+router.get('/', ClientController.getAllClientsController)
 
 //Obtener un cliente por ID
-router.get('/:id',ClientController.getClientById)
+router.get('/:id',ClientController.getClientByIdController)
 
 // Crear un nuevo cliente
-router.post('/',ClientController.createClient)
+router.post('/',ClientController.createClientController)
 
 // actualizar un cliente existente 
-//router.patch('/:id',ClientController.updateClient)
+router.patch('/:id',ClientController.updateClientController)
 
 // Eliminar un cliente
-//router.delete('/:id',ClientController.deleteClient)
+router.delete('/:id',ClientController.deleteClientController)
 
 export default router
