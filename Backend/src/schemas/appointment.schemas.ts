@@ -1,0 +1,15 @@
+import { z } from 'zod'
+import { AppointmentStatus } from '../interfaces/appointment.interfaces'
+
+export const appointmenttSchema = z.object({
+    clientId: z.number().int().positive(),
+    employeeId: z.number().int().positive(),
+    serviceId: z.number().int().positive(),
+    date: z.string().refine((date) => !isNaN(Date.parse(date))),
+    startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'El formato de hora debe ser HH:mm'),
+    endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'El formato de hora debe ser HH:mm'),
+    status: z.nativeEnum(AppointmentStatus),
+    total: z.number().positive().optional()
+})
+
+export const updateAppointmentSchema = appointmenttSchema.partial()

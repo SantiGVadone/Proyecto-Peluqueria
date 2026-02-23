@@ -1,14 +1,15 @@
+export enum ClientOrigin {
+    LOCAL = 'LOCAL',
+    TOURIST = 'TOURIST'
+}
 export interface Client {
     id: number
     name: string 
     lastname: string 
     phone: string 
-    isLocal: boolean
-    email?: string 
+    origin: ClientOrigin
     createdAt: Date | string
 }
-
-export type ClientWithOutSensitveInfo = Omit<Client, 'id' | 'email' | 'createdAt'>
 
 export type CreateClientDTO = Omit<Client, 'id' | 'createdAt'>
 
