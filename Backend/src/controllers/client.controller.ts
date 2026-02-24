@@ -1,10 +1,8 @@
 import {Request, Response} from 'express'
-//import { Client } from '../interfaces/client.interfaces'
-//import clientsData from '../data/clients.json'
 import { clientSchema, updateClientSchema } from '../schemas/client.schemas'
 import { getAllClientsServices, getClientByIdService, createClientService, updateClientService , deleteClientService} from '../services/client.services'
 
-//obtener todos los clientes
+//Get all the clients
 export const getAllClientsController = async (req: Request, res: Response) => {
     try{
         const result = await getAllClientsServices()
@@ -15,7 +13,7 @@ export const getAllClientsController = async (req: Request, res: Response) => {
     }
 }
 
-//obtener un cliente por ID
+//Get a client by Id
 export const getClientByIdController = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id as string, 10)
@@ -33,7 +31,7 @@ export const getClientByIdController = async (req: Request, res: Response) => {
     }
 }
 
-//Crear un nuevo cliente
+//Create a new client
 export const createClientController = async (req: Request, res: Response) => {
     try{
         const validation = clientSchema.safeParse(req.body)
@@ -50,8 +48,8 @@ export const createClientController = async (req: Request, res: Response) => {
     }
 }
 
-// //actualizar un cliente existente 
- export const updateClientController = async (req: Request, res: Response) => {
+// Update a existing client
+export const updateClientController = async (req: Request, res: Response) => {
     try{
         const id = parseInt(req.params.id as string, 10)
         if (isNaN(id)) {
@@ -74,7 +72,8 @@ export const createClientController = async (req: Request, res: Response) => {
     }
 }
 
- export const deleteClientController = async (req: Request, res: Response) => {
+// Delete a client by Id
+export const deleteClientController = async (req: Request, res: Response) => {
     try{
         const id = parseInt(req.params.id as string, 10)
         if (isNaN(id)) {

@@ -3,20 +3,21 @@ import * as ClientController from '../controllers/client.controller'
 
 const router = Router()
 
-// Rutas para clientes
-// Obtener todos los clientes
+// routes for clients
+
+// Get all clients
 router.get('/', ClientController.getAllClientsController)
 
-//Obtener un cliente por ID
+//Get a client by ID
 router.get('/:id',ClientController.getClientByIdController)
 
-// Crear un nuevo cliente
+// Create a new client
 router.post('/',ClientController.createClientController)
 
-// actualizar un cliente existente 
+// Update an existing client
 router.patch('/:id',ClientController.updateClientController)
 
-// Eliminar un cliente
+// Delete a client
 router.delete('/:id',ClientController.deleteClientController)
 
 export default router
