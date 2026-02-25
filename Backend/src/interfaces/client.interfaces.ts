@@ -8,6 +8,7 @@ export interface Client {
     lastname: string 
     phone: string 
     origin: ClientOrigin
+    businessId: number
     createdAt: Date | string
 }
 

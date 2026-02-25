@@ -26,7 +26,7 @@ export const updateAppointment = async (id: number, data: UpdateAppointmentDTO) 
     // 1. Obtenemos las llaves (campos) que vienen en el objeto
     const keys = Object.keys(data);
     
-    if (keys.length === 0) return; // Si no mandaron nada para actualizar, salimos
+    if (keys.length === 0) return null // Si no mandaron nada para actualizar, salimos
 
     // 2. Construimos la parte del "SET campo1 = $1, campo2 = $2"
     // Usamos index + 1 porque en PostgreSQL los parámetros empiezan en $1
@@ -51,8 +51,6 @@ export const updateAppointment = async (id: number, data: UpdateAppointmentDTO) 
 
 export const deleteAppointment = async (id:number) => {
     const result = await pool.query(`
-            DELETE FROM records WHERE appointment_id = $1;
-            DELETE FROM appointment WHERE id = $2;`,
-        [id,id])
+            DELETE FROM appointment WHERE appointment_id = $1;`,[id]) //aca tengo que hacer el delette del appointment con cascada
     return result
 }

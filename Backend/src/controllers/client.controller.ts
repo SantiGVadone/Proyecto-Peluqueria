@@ -3,7 +3,7 @@ import { clientSchema, updateClientSchema } from '../schemas/client.schemas'
 import { getAllClientsServices, getClientByIdService, createClientService, updateClientService , deleteClientService} from '../services/client.services'
 
 //Get all the clients
-export const getAllClientsController = async (req: Request, res: Response) => {
+export const getAllClientsController = async (_req: Request, res: Response) => {
     try{
         const result = await getAllClientsServices()
         res.status(200).json(result)

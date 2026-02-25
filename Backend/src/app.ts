@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import clientRoutes from './routes/client.routes';
 import { pool } from './config/db';
+
+import clientRoutes from './routes/client.routes';
 import appointmentRoutes from './routes/appointment.routes';
+import businessRoutes from './routes/business.routes'
 
 const app = express();
 
@@ -13,6 +15,7 @@ app.use(express.json()); // Para que entienda los bodies en formato JSON
 // Rutas
 app.use('/api/clients', clientRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/business',businessRoutes)
 
 
 const PORT = process.env.PORT || 3000;
