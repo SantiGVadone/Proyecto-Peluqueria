@@ -1,6 +1,6 @@
 export enum ClientOrigin {
-    LOCAL = 'LOCAL',
-    TOURIST = 'TOURIST'
+    LOCAL = 'Local',
+    TOURIST = 'Tourist'
 }
 export interface Client {
     id: number
