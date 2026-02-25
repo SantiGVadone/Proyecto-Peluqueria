@@ -1,3 +1,8 @@
 node_modules/
 dist/
 .env
+.sql
+creacion de la db.sql
+inserts a la db.sql
+NUEVA DB CON (ON CASCADE).sql
+Documentacion de la DB.docx
