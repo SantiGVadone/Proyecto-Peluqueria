@@ -5,7 +5,7 @@ export enum AppointmentStatus {
     CANCELED = 'CANCELED'
 }
 
-export interface Appointment {
+export interface Appointment { 
     id: number 
     clientId: number
     employeeId: number

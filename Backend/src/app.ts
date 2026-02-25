@@ -3,11 +3,6 @@ import cors from 'cors';
 import clientRoutes from './routes/client.routes';
 import { pool } from './config/db';
 import appointmentRoutes from './routes/appointment.routes';
-// import { createClient } from './utils/client.repository';
-// createClient().then(data => {
-//   console.log(data)
-// })
-
 
 const app = express();
 

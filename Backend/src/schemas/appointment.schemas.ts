@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { AppointmentStatus } from '../interfaces/appointment.interfaces'
 
-export const appointmenttSchema = z.object({
+export const appointmentSchema = z.object({
     clientId: z.number().int().positive(),
     employeeId: z.number().int().positive(),
     serviceId: z.number().int().positive(),
@@ -12,4 +12,4 @@ export const appointmenttSchema = z.object({
     total: z.number().positive().optional()
 })
 
-export const updateAppointmentSchema = appointmenttSchema.partial()
+export const updateAppointmentSchema = appointmentSchema.partial()
