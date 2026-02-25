@@ -1,14 +1,28 @@
-POR AHORA LO QUE HICE FUE CREAR TODAS LAS CARPETAS EN EL BACKEND 
+# ✂️ Peluquería API - Sistema de Gestión de Turnos
 
-configure el tsconfig 
+API REST diseñada para la administración integral de peluquerías y centros de estética. Este proyecto permite digitalizar la agenda, gestionar perfiles de clientes y organizar el catálogo de servicios de forma eficiente, optimizando el flujo de trabajo diario.
 
-CREE LA INTERFACE DE COMO VA A SER EL TEMA DEL USUARIO
+## 🚀 Características Principales
 
-HICE UNA PETICION BASICA EN EL ARCHIVO APP.TS USANDO LA MEMORIA INTERNA 
+* **Gestión de Clientes:** CRUD completo con validaciones de datos y perfiles.
+* **Sistema de Turnos:** Agendado dinámico de citas con control de disponibilidad.
+* **Catálogo de Servicios:** Administración de prestaciones, duraciones y precios.
+* **Arquitectura Escalable:** Estructura modular basada en controladores, servicios e interfaces para facilitar el mantenimiento.
 
-TENDRIA QUE SEGUIR SUMANDO COSAS AL USER.INTERFACES.TS 
+## 🛠️ Stack Tecnológico
 
-TENDRIA QUE ARRANCAR CON EL /ROUTER 
+* **Entorno:** [Node.js / Express]
+* **Lenguaje:** [TypeScript / JavaScript]
+* **Base de Datos:** [PostgreSQL]
 
-Y DESPUES VER BIEN EL TEMA DE LA BASE DE DATOS PARA PROBARLO YA DE FORMA MAS REAL.
+## 📂 Estructura del Proyecto
 
+El código está organizado siguiendo principios de separación de responsabilidades:
+
+```text
+src/
+ ├── controllers/    # Manejo de peticiones y respuestas HTTP
+ ├── services/       # Lógica de negocio core y casos de uso
+ ├── schemas/         # Esquemas y modelos de la base de datos (Database Schemas)
+ ├── interfaces/     # Definición de contratos y tipos de datos
+ └── routes/         # Definición de los endpoints de la API
