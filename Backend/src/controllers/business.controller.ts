@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getAllBusinessServices, getBusinessByIdServices, createBusinessServices, updateBusinessServices, deleteBusinessServices} from '../services/business.services'
-import { businessSchema } from "../schemas/business.schemas";
+import { businessSchema, updateBusinessSchema } from "../schemas/business.schemas";
 
 
 export const getAllBusinessController = async (_req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const updateBusinessController = async (req: Request, res: Response) => {
         if( isNaN (id)){
             return res.status(400).json({ message: 'ID invalida'})
         }
-        const validation = businessSchema.safeParse(req.body)
+        const validation = updateBusinessSchema.safeParse(req.body)
         if(! validation.success){
             return res.status(400).json({error: validation.error.message})
         }

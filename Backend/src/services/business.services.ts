@@ -1,6 +1,8 @@
 import { CreateBusinessDTO, UpdateBusinessDTO } from '../interfaces/business.interfaces'
 import { getAllBusiness, getBusinessById, newBusiness, updateBusiness, deleteBusiness} from '../repository/business.repository'
 
+//en este archivo se hacen las validaciones de las reglas del negocio
+
 export const getAllBusinessServices = async () => {
     const result = await getAllBusiness()
     return result

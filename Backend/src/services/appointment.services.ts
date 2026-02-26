@@ -17,6 +17,7 @@ export const createAppointmentServices = async (data: CreateAppointmentDTO) => {
 }
 
 export const updateAppointmentServices = async (id: number, data: UpdateAppointmentDTO) => {
+    //aca tendria que verificar que no haya turnos encimados (para el empleado), y ese tipo de cosas
     const result = await updateAppointment(id, data)
     return result
 }
