@@ -6,6 +6,7 @@ import businessRoutes from './routes/business.routes'
 import employeeRoutes from './routes/employee.routes'
 import clientRoutes from './routes/client.routes'
 import appointmentRoutes from './routes/appointment.routes'
+import servicesRoutes from './routes/services.routes'
 
 const app = express()
 
@@ -18,6 +19,9 @@ app.use('/api/business',businessRoutes)
 app.use('/api/employee',employeeRoutes)
 app.use('/api/clients', clientRoutes)
 app.use('/api/appointments', appointmentRoutes)
+app.use('/api/services',servicesRoutes)
+//app.use('/api/bonus',bonusRoutes)
+//app.use('/api/records',recordsRoutes)
 
 const PORT = process.env.PORT || 3000;
 

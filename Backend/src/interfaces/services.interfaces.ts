@@ -1,8 +1,18 @@
 export enum ServiceType {
-    HAIR = 'Hair',
-    MANICURE = 'Manicure',
-    PEDICURE = 'Pedicure',
-    HAIR_REMOVAL = 'HairRemoval',
-    MAKE_UP = 'MakeUp',
-    MASSAGE = 'Massage'    
+    HAIR = 'Peluqueria',
+    MANICURE = 'Manicura',
+    PEDICURE = 'Pedicura',
+    HAIR_REMOVAL = 'Depilacion',
+    MAKE_UP = 'Maquillaje',
+    MASSAGE = 'Masaje'    
 }
+
+export interface Services {
+    id: number
+    name: ServiceType
+    businessId: number
+}
+
+export type CreateServicesDTO = Omit<Services,'id'>
+
+export type UpdateServicesDTO = Partial<CreateServicesDTO>
