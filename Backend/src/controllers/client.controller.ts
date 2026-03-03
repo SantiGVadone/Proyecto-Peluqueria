@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import { clientSchema, updateClientSchema } from '../schemas/client.schemas'
 import { getAllClientsServices, getClientByIdService, createClientService, updateClientService , deleteClientService} from '../services/client.services'
 
 //Get all the clients
@@ -34,12 +33,9 @@ export const getClientByIdController = async (req: Request, res: Response) => {
 //Create a new client
 export const createClientController = async (req: Request, res: Response) => {
     try{
-        const validation = clientSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
         //si estoy aca es porque ya valide los datos
-        const newClient = await createClientService(validation.data)
+        const newClient = await createClientService(data)
         res.status(201).json(newClient)
 
     }catch (e) {
@@ -55,13 +51,9 @@ export const updateClientController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-            // Validar los datos de entrada
-        const validation = updateClientSchema.safeParse(req.body)
-        if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message })
-        }
+        const data = res.locals.validatedBody ?? req.body
         // Aquí iría la lógica para actualizar el cliente en la base de datos
-        const updatedClient = await updateClientService(id , validation.data)
+        const updatedClient = await updateClientService(id , data)
         if (!updatedClient) {
             return res.status(404).json({ message: 'Cliente no encontrado' })
         }

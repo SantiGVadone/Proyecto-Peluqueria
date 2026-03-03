@@ -29,9 +29,9 @@ export const updateClient = async (id:number, data: UpdateClientDTO) => {
         name = COALESCE($1, name),
         lastname = COALESCE($2, lastname),
         phone = COALESCE($3, phone),
-        origin = COALESCE($4, origin)
+        origin = COALESCE($4, origin),
         business_id = COALESCE ($5, business_id)
-        WHERE id = $5 RETURNING *;`
+        WHERE id = $6 RETURNING *;`
         ,[data.name, data.lastname, data.phone, data.origin, data.businessId ,id])
     return result.rows[0]
 }

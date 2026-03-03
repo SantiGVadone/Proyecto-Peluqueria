@@ -18,7 +18,7 @@ export const newEmployee = async (data: CreateEmployeeDTO) => {
     const result = await pool.query(`
         INSERT INTO employee (name, lastname, phone, email, role, commission, salary, business_id, created_at) 
                       VALUES ($1  , $2      , $3   , $4   , $5  , $6        , $7    , $8         , $9        ) RETURNING *;`,
-        [data.name, data.lastname, data.phone, data.email, data.email, data.role, data.commission, data.salary, data.businessId, new Date()])
+        [data.name, data.lastname, data.phone, data.email, data.role, data.commission, data.salary, data.businessId, new Date()])
     return result.rows[0]
 }
 
@@ -34,7 +34,7 @@ export const updateEmployee = async (id:number, data: UpdateEmployeeDTO) => {
         commission = COALESCE($6, commission),
         salary = COALESCE($7, salary),
         business_id = COALESCE ($8, business_id)
-        WHERE id = $5 RETURNING *;`
+        WHERE id = $9 RETURNING *;`
         ,[data.name, data.lastname, data.phone, data.email, data.role, data.commission, data.salary, data.businessId ,id])
     return result.rows[0]
 }
