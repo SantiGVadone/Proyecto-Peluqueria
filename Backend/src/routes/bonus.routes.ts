@@ -1,5 +1,7 @@
 import { Router } from "express"
 import * as BonusController from '../controllers/bonus.controller'
+import { validateBody } from "../middlewares/validate.middlewares"
+import { bonusSchema, updateBonusSchema } from "../schemas/bonus.schemas"
 
 const router = Router()
 
@@ -15,10 +17,10 @@ router.get('/:id',BonusController.getBonusByIdController)
 router.get('/employee/:id',BonusController.getBonusByEmployeeIdController)
 
 // Create a new Bonus
-router.post('/',BonusController.createBonusController)
+router.post('/',validateBody(bonusSchema) ,BonusController.createBonusController)
 
 // Update an existing Bonus
-router.patch('/:id',BonusController.updateBonusController)
+router.patch('/:id',validateBody(updateBonusSchema) ,BonusController.updateBonusController)
 
 // Delete a Bonus
 router.delete('/:id',BonusController.deleteBonusController)

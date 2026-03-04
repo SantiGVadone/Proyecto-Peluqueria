@@ -1,5 +1,7 @@
 import { Router } from "express"
 import * as RecordsController from '../controllers/records.controller'
+import { validateBody } from "../middlewares/validate.middlewares"
+import { recordsSchema, updateRecordsSchema } from "../schemas/records.schemas"
 
 const router = Router()
 
@@ -18,10 +20,10 @@ router.get('/client/:id',RecordsController.getRecordsByClientIdController)
 router.get('/employee/:id',RecordsController.getRecordsByEmployeeIdController)
 
 // Create a new Records
-router.post('/',RecordsController.createRecordsController)
+router.post('/',validateBody(recordsSchema) ,RecordsController.createRecordsController)
 
 // Update an existing Records
-router.patch('/:id',RecordsController.updateRecordsController)
+router.patch('/:id',validateBody(updateRecordsSchema) ,RecordsController.updateRecordsController)
 
 // Delete a Records
 router.delete('/:id',RecordsController.deleteRecordsController)

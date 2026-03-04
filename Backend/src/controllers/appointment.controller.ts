@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { getAllAppointmentsServices, getAppointmentByIdServices, createAppointmentServices, updateAppointmentServices, deleteAppointmentServices} from '../services/appointment.services'
-import {appointmentSchema, updateAppointmentSchema} from '../schemas/appointment.schemas'
 
 export const getAllAppointmentsController = async ( req: Request, res: Response) => {
     try {
@@ -31,12 +30,9 @@ export const getAppointmentByIdController = async ( req: Request, res: Response)
 
 export const createAppointmentController = async ( req: Request, res: Response) => {
     try{
-        const validation = appointmentSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
         // aca los datos ya estan validados 
-        const result = createAppointmentServices(validation.data)
+        const result = createAppointmentServices(data)
         return res.status(201).json(result)
     }catch (e){
         console.error(e)
@@ -51,20 +47,15 @@ export const updateAppointmentController = async (req: Request, res: Response) =
             return res.status(400).json({ message: 'ID invalido'})
         }
         //esto quiere decir que la id  es valida
+        const data = res.locals.validatedBody ?? req.body
 
-        const validate= updateAppointmentSchema.safeParse(req.body)
-        if(!validate.success){
-            return res.status(400).json({ error: validate.error.message })
-        }
-        //esto quiere decir que la req es valida
-        const updatedAppointment = updateAppointmentServices (id, validate.data)
+        const updatedAppointment = updateAppointmentServices (id, data)
         return updatedAppointment
     }catch (e) {
         console.error(e)
         res.status(500).json({message: 'Error al actualizar el turno'})
     }
 }
-
 
 export const deleteAppointmentController = async (req: Request, res: Response) => {
     try{

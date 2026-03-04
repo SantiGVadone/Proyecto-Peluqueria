@@ -1,5 +1,7 @@
 import { Router } from "express"
 import * as BusinessController from '../controllers/business.controller'
+import { validateBody } from "../middlewares/validate.middlewares"
+import { businessSchema, updateBusinessSchema } from "../schemas/business.schemas"
 
 const router = Router()
 
@@ -12,10 +14,10 @@ router.get('/', BusinessController.getAllBusinessController)
 router.get('/:id',BusinessController.getBusinessByIdController)
 
 // Create a new Business
-router.post('/',BusinessController.createBusinessController)
+router.post('/',validateBody(businessSchema) ,BusinessController.createBusinessController)
 
 // Update an existing Business
-router.patch('/:id',BusinessController.updateBusinessController)
+router.patch('/:id',validateBody(updateBusinessSchema) ,BusinessController.updateBusinessController)
 
 // Delete a Business
 router.delete('/:id',BusinessController.deleteBusinessController)

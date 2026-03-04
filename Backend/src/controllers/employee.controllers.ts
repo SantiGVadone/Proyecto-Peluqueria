@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import { employeeSchema, updateEmployeeSchema } from '../schemas/employee.schemas'
 import { getAllEmployeeServices, getEmployeeByIdService, createEmployeeService, updateEmployeeService, deleteEmployeeService} from '../services/employee.services'
 
 //Get all the clients
@@ -34,12 +33,10 @@ export const getEmployeeByIdController = async (req: Request, res: Response) => 
 //Create a new Employee
 export const createEmployeeController = async (req: Request, res: Response) => {
     try{
-        const validation = employeeSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
         //si estoy aca es porque ya valide los datos
-        const newEmployee = await createEmployeeService(validation.data)
+        const newEmployee = await createEmployeeService(data)
+
         res.status(201).json(newEmployee)
 
     }catch (e) {
@@ -56,12 +53,10 @@ export const updateEmployeeController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
             // Validar los datos de entrada
-        const validation = updateEmployeeSchema.safeParse(req.body)
-        if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message })
-        }
+        const data = res.locals.validatedBody ?? req.body
+
         // Aquí iría la lógica para actualizar el Employeee en la base de datos
-        const updatedEmployee = await updateEmployeeService(id , validation.data)
+        const updatedEmployee = await updateEmployeeService(id , data)
         if (!updatedEmployee) {
             return res.status(404).json({ message: 'Empleado no encontrado' })
         }

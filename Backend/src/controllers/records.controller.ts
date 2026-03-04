@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import { recordsSchema, updateRecordsSchema } from '../schemas/records.schemas'
 import { getAllRecordsServices, getRecordsByIdService, getRecordsByClientIdService, getRecordsByEmployeeIdService, createRecordsService, updateRecordsService, deleteRecordsService } from '../services/records.services'
 
 //Get all the clients
@@ -72,12 +71,9 @@ export const getRecordsByEmployeeIdController = async (req: Request, res: Respon
 //Create a new Records
 export const createRecordsController = async (req: Request, res: Response) => {
     try{
-        const validation = recordsSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
         //si estoy aca es porque ya valide los datos
-        const newRecords = await createRecordsService(validation.data)
+        const newRecords = await createRecordsService(data)
         res.status(201).json(newRecords)
 
     }catch (e) {
@@ -93,13 +89,12 @@ export const updateRecordsController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-            // Validar los datos de entrada
-        const validation = updateRecordsSchema.safeParse(req.body)
-        if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message })
-        }
-        
-        const updatedRecords = await updateRecordsService(id , validation.data)
+
+        // Validar los datos de entrada
+        const data = res.locals.validatedBody ?? req.body
+
+        const updatedRecords = await updateRecordsService(id , data)
+
         if (!updatedRecords) {
             return res.status(404).json({ message: 'Registro no encontrado' })
         }

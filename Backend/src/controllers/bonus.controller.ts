@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import { bonusSchema, updateBonusSchema } from '../schemas/bonus.schemas'
 import { getAllBonusServices, getBonusByIdService, getBonusByEmployeeIdService, createBonusService, updateBonusService, deleteBonusService } from '../services/bonus.services'
 
 //Get all the bonus
@@ -53,12 +52,9 @@ export const getBonusByEmployeeIdController = async (req: Request, res: Response
 //Create a new Bonus
 export const createBonusController = async (req: Request, res: Response) => {
     try{
-        const validation = bonusSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
         //si estoy aca es porque ya valide los datos
-        const newBonus = await createBonusService(validation.data)
+        const newBonus = await createBonusService(data)
         res.status(201).json(newBonus)
 
     }catch (e) {
@@ -75,12 +71,9 @@ export const updateBonusController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
             // Validar los datos de entrada
-        const validation = updateBonusSchema.safeParse(req.body)
-        if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message })
-        }
+            const data = res.locals.validatedBody ?? req.body
         
-        const updatedBonus = await updateBonusService(id , validation.data)
+        const updatedBonus = await updateBonusService(id , data)
         if (!updatedBonus) {
             return res.status(404).json({ message: 'Bonus no encontrado' })
         }

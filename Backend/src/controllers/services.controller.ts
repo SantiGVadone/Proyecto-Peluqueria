@@ -1,5 +1,4 @@
 import {Request, Response} from 'express'
-import { ServicesSchema, updateServicesSchema} from '../schemas/services.schemas'
 import { getAllServicesServices, getServicesByIdService, createServicesService, updateServicesService, deleteServicesService} from '../services/services.services'
 
 //Get all the clients
@@ -34,12 +33,10 @@ export const getServicesByIdController = async (req: Request, res: Response) => 
 //Create a new Services
 export const createServicesController = async (req: Request, res: Response) => {
     try{
-        const validation = ServicesSchema.safeParse(req.body)
-        if ( !validation.success) {
-            return res.status(400).json({ error: validation.error.message})
-        }
+        const data = res.locals.validatedBody ?? req.body
+
         //si estoy aca es porque ya valide los datos
-        const newServices = await createServicesService(validation.data)
+        const newServices = await createServicesService(data)
         res.status(201).json(newServices)
 
     }catch (e) {
@@ -55,13 +52,10 @@ export const updateServicesController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-            // Validar los datos de entrada
-        const validation = updateServicesSchema.safeParse(req.body)
-        if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message })
-        }
-        // Aquí iría la lógica para actualizar el Servicese en la base de datos
-        const updatedServices = await updateServicesService(id , validation.data)
+        // Validar los datos de entrada
+        const data = res.locals.validatedBody ?? req.body
+
+        const updatedServices = await updateServicesService(id , data)
         if (!updatedServices) {
             return res.status(404).json({ message: 'Servicio no encontrado' })
         }

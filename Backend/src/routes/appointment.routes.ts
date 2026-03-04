@@ -1,5 +1,7 @@
 import { Router } from "express"
 import * as AppointmentController from '../controllers/appointment.controller'
+import { validateBody } from "../middlewares/validate.middlewares"
+import { appointmentSchema, updateAppointmentSchema } from "../schemas/appointment.schemas"
 
 const router = Router()
 
@@ -12,10 +14,10 @@ router.get('/', AppointmentController.getAllAppointmentsController)
 router.get('/:id',AppointmentController.getAppointmentByIdController)
 
 // Create a new appointment
- router.post('/',AppointmentController.createAppointmentController)
+ router.post('/', validateBody(appointmentSchema) ,AppointmentController.createAppointmentController)
 
 // Update an existing appointment
- router.patch('/:id',AppointmentController.updateAppointmentController)
+ router.patch('/:id',validateBody(updateAppointmentSchema) ,AppointmentController.updateAppointmentController)
 
 // // Delete an appointment
  router.delete('/:id',AppointmentController.deleteAppointmentController)

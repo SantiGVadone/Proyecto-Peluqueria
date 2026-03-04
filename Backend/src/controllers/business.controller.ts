@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { getAllBusinessServices, getBusinessByIdServices, createBusinessServices, updateBusinessServices, deleteBusinessServices} from '../services/business.services'
-import { businessSchema, updateBusinessSchema } from "../schemas/business.schemas";
-
 
 export const getAllBusinessController = async (_req: Request, res: Response) => {
     try{
@@ -29,12 +27,9 @@ export const getBusinessByIdController = async (req: Request, res: Response) => 
 
 export const createBusinessController = async (req: Request, res: Response) => {
     try{
-        const validation = businessSchema.safeParse(req.body)
-        if(! validation.success){
-            return res.status(400).json({error: validation.error.message})
-        }
-        //si sali de ahi es porque los datos ya estan validados
-        const newBusiness = await createBusinessServices(validation.data)
+        const data = res.locals.validatedBody ?? req.body
+        const newBusiness = await createBusinessServices(data)
+
         return res.status(201).json(newBusiness)
     }catch(e){
         console.error(e)
@@ -48,11 +43,9 @@ export const updateBusinessController = async (req: Request, res: Response) => {
         if( isNaN (id)){
             return res.status(400).json({ message: 'ID invalida'})
         }
-        const validation = updateBusinessSchema.safeParse(req.body)
-        if(! validation.success){
-            return res.status(400).json({error: validation.error.message})
-        }
-        const updatedBusiness = await updateBusinessServices(id, validation.data)
+        const data = res.locals.validatedBody ?? req.body
+        const updatedBusiness = await updateBusinessServices(id, data)
+
         return res.status(200).json(updatedBusiness)
     }catch(e){
         console.error(e)
