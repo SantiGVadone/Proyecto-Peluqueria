@@ -1,6 +1,6 @@
 import express from 'express'
-import cors from 'cors'
 import { pool } from './config/db'
+import { corsMiddleware } from './config/cors'
 
 import businessRoutes from './routes/business.routes'
 import employeeRoutes from './routes/employee.routes'
@@ -13,7 +13,7 @@ import bonusRoutes from './routes/bonus.routes'
 const app = express()
 
 // Middlewares
-app.use(cors());
+app.use(corsMiddleware)
 app.use(express.json()); // Para que entienda los bodies en formato JSON
 
 // Rutas
