@@ -4,7 +4,8 @@ import { getAllBonusServices, getBonusByIdService, getBonusByEmployeeIdService, 
 //Get all the bonus
 export const getAllBonusController = async (_req: Request, res: Response) => {
     try{
-        const result = await getAllBonusServices()
+        const {business_id} = res.locals.user
+        const result = await getAllBonusServices(business_id)
         res.status(200).json(result)
     } catch (e) {
         console.error(e)
@@ -19,7 +20,10 @@ export const getBonusByIdController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getBonusByIdService(id)
+        const {business_id} = res.locals.user
+
+        const result = await getBonusByIdService(id, business_id)
+
         if (!result) {
             return res.status(404).json({ message: 'Bonus no encontrado'})
         }
@@ -37,7 +41,17 @@ export const getBonusByEmployeeIdController = async (req: Request, res: Response
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getBonusByEmployeeIdService(id)
+        const {role, business_id, id: loggedUserId} = res.locals.user
+        const { id: targetEmployeeId } = req.params
+
+        if (role === 'EMPLOYEE' && loggedUserId !== Number(targetEmployeeId)) {
+            return res.status(403).json({ 
+                message: 'Acceso denegado: No puedes ver los bonos de otro empleado' 
+            });
+        }
+
+        const result = await getBonusByEmployeeIdService(id, business_id)
+
         if (!result) {
             return res.status(404).json({ message: 'Bonus no encontrados'})
         }
@@ -53,8 +67,9 @@ export const getBonusByEmployeeIdController = async (req: Request, res: Response
 export const createBonusController = async (req: Request, res: Response) => {
     try{
         const data = res.locals.validatedBody ?? req.body
+        const {business_id} = res.locals.user
         //si estoy aca es porque ya valide los datos
-        const newBonus = await createBonusService(data)
+        const newBonus = await createBonusService(data, business_id)
         res.status(201).json(newBonus)
 
     }catch (e) {
@@ -70,10 +85,12 @@ export const updateBonusController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-            // Validar los datos de entrada
-            const data = res.locals.validatedBody ?? req.body
+        // Validar los datos de entrada
+        const data = res.locals.validatedBody ?? req.body
+
+        const {business_id} = res.locals.user
         
-        const updatedBonus = await updateBonusService(id , data)
+        const updatedBonus = await updateBonusService(id , data, business_id)
         if (!updatedBonus) {
             return res.status(404).json({ message: 'Bonus no encontrado' })
         }
@@ -92,7 +109,9 @@ export const deleteBonusController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
         
-        const result = await deleteBonusService(id)
+        const {business_id} = res.locals.user
+
+        const result = await deleteBonusService(id, business_id)
             if(! result ) {
                 return res.status(404).json({ message: 'Registro no encontrado'})
             }
