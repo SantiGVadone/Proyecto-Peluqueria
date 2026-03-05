@@ -7,49 +7,51 @@ export const getAllAppointments = async (business_id: number) => {
     return result.rows
 }
 
-export const getAppointmentById = async (id: number) => {
+export const getAppointmentById = async (id: number, business_id: number) => {
     const result = await pool.query(`
-        SELECT * FROM appointments WHERE id = $1
-        `, [ id])
+        SELECT * FROM appointments WHERE id = $1 AND business_id= $2;
+        `, [ id, business_id])
     return result.rows[0]
 }
 
-export const createAppointment = async (data: CreateAppointmentDTO) => {
+export const createAppointment = async (data: CreateAppointmentDTO, business_id: number) => {
     const result = await pool.query(`
-        INSERT INTO appointments (client_id, employee_id, service_id, date, start_time, end_time, status) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *;`,
-        [data.clientId,data.employeeId,data.serviceId, data.date, data.startTime, data.endTime, data.status])
+        INSERT INTO appointments (client_id, employee_id, service_id, business_id,  date, start_time, end_time, status) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;`,
+        [data.clientId,data.employeeId,data.serviceId, business_id,  data.date, data.startTime, data.endTime, data.status])
     return result.rows[0]
 }
 
-export const updateAppointment = async (id: number, data: UpdateAppointmentDTO) => {
-    // 1. Obtenemos las llaves (campos) que vienen en el objeto
-    const keys = Object.keys(data);
-    
-    if (keys.length === 0) return null // Si no mandaron nada para actualizar, salimos
+export const updateAppointment = async (id: number, business_id: number, data: UpdateAppointmentDTO) => {
 
-    // 2. Construimos la parte del "SET campo1 = $1, campo2 = $2"
-    // Usamos index + 1 porque en PostgreSQL los parámetros empiezan en $1
-    const setClause = keys
-        .map((key, index) => `${key} = $${index + 1}`)
-        .join(', ');
-
-    // 3. Los valores van en un array aparte para evitar Inyección SQL
-    const values = Object.values(data);
-    
-    // 4. Agregamos el ID al final para el WHERE
-    const query = `
-        UPDATE appointments 
-        SET ${setClause} 
-        WHERE id = $${keys.length + 1}
-        RETURNING *;
-    `;
-
-    const result = await pool.query(query, [...values, id]);
-    return result.rows[0];
-};
-
-export const deleteAppointment = async (id:number) => {
     const result = await pool.query(`
-            DELETE FROM appointment WHERE appointment_id = $1;`,[id]) //aca tengo que hacer el delette del appointment con cascada
+        UPDATE appointments SET 
+        client_id = COALESCE($1, client_id),
+        employee_id = COALESCE($2, employee_id),
+        service_id = COALESCE($3, service_id),
+        date = COALESCE ($4, date),
+        start_time = COALESCE ($5, start_time),
+        end_time = COALESCE ($6, end_time),
+        status = COALESCE ($7, status),
+        total_cost = COALESCE ($8, total_cost )
+        WHERE id = $9 AND business_id = $10 
+        RETURNING *;`
+        ,[
+            data.clientId,
+            data.employeeId,
+            data.serviceId,
+            data.date,
+            data.startTime,
+            data.endTime,
+            data.status,
+            data.total,
+            id,
+            business_id
+        ])
+    return result.rows[0]
+}
+
+export const deleteAppointment = async (id:number, business_id: number) => {
+    const result = await pool.query(`
+            DELETE FROM appointment WHERE appointment_id = $1 AND business_id = $2;`,[id, business_id])
     return result
 }

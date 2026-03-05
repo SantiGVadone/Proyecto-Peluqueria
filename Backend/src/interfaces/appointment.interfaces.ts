@@ -21,4 +21,8 @@ export interface Appointment {
 
 export type CreateAppointmentDTO = Omit<Appointment, 'id' | 'createdAt' | 'total'>
 
-export type UpdateAppointmentDTO = Partial<CreateAppointmentDTO> & { status?: AppointmentStatus }
+export type UpdateAppointmentDTO = Partial<CreateAppointmentDTO> & 
+                                                {
+                                                    status?: AppointmentStatus;
+                                                    total?: number;
+                                                }
