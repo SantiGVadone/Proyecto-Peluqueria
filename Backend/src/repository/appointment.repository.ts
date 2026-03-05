@@ -1,10 +1,9 @@
 import { pool } from '../config/db'
 import { CreateAppointmentDTO, UpdateAppointmentDTO } from '../interfaces/appointment.interfaces'
 
-export const getAllAppointments = async () => {
+export const getAllAppointments = async (business_id: number) => {
     const result = await pool.query ( `
-        SELECT * FROM appointments
-        `)
+        SELECT * FROM appointments WHERE business_id = $1;`, [business_id])
     return result.rows
 }
 

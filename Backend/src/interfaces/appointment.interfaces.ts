@@ -10,6 +10,7 @@ export interface Appointment {
     clientId: number
     employeeId: number
     serviceId: number
+    businessId: number
     date: Date | string 
     startTime: string
     endTime: string

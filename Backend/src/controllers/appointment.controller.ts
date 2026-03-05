@@ -3,7 +3,8 @@ import { getAllAppointmentsServices, getAppointmentByIdServices, createAppointme
 
 export const getAllAppointmentsController = async ( req: Request, res: Response) => {
     try {
-        const result = await getAllAppointmentsServices()
+        const { business_id} = res.locals.user
+        const result = await getAllAppointmentsServices(business_id)
         res.status(200).json(result)
     } catch (e) {
         console.error(e)

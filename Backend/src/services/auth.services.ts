@@ -1,5 +1,5 @@
 import {pool} from '../config/db';
-import { LoginDTO, RegisterBossDTO } from '../interfaces/auth.interfaces';
+import { LoginDTO, RegisterBossDTO, RegisterEmployeeDTO } from '../interfaces/auth.interfaces';
 import * as authRepo from '../repository/auth.repository';
 import { comparePassword, hashPassword } from '../utils/auth.utils'
 import jwt from 'jsonwebtoken'
@@ -27,6 +27,15 @@ export const registerBossService = async (data: RegisterBossDTO ) => {
     }
 };
 
+export const registerEmployeeService = async (data: RegisterEmployeeDTO) => {
+
+    const hashedPassword = await hashPassword(data.password)
+
+    await authRepo.createEmployeeRepo(data, hashedPassword)
+    
+}
+
+
 export const loginService = async (data: LoginDTO) => {
     const user = await authRepo.getUserByEmailRepo(data.email);
     if (!user) throw new Error('Email no registrado');
@@ -36,13 +45,19 @@ export const loginService = async (data: LoginDTO) => {
 
     // Generamos el token con la info de sesión
     const token = jwt.sign(
-        { id: user.id, role: user.role, business_id: user.business_id },
+        { id: user.id,
+          role: user.role, 
+          business_id: user.business_id 
+        },
         process.env.JWT_SECRET || 'secret_provisorio',
         { expiresIn: '8h' }
     );
 
     return {
         token,
-        user: { name: user.name, role: user.role, business_id: user.business_id }
+        user: { 
+            name: user.name, 
+            role: user.role, 
+            business_id: user.business_id }
     };
 };

@@ -1,6 +1,6 @@
 import { PoolClient } from 'pg'
 import {pool} from '../config/db'
-import { RegisterBossDTO } from '../interfaces/auth.interfaces'
+import { RegisterBossDTO, RegisterEmployeeDTO } from '../interfaces/auth.interfaces'
 
 // Usamos el cliente de la transacción para asegurar que ambos inserts funcionen o ninguno
 export const createBusinessRepo = async (client: PoolClient, data: RegisterBossDTO) => {
@@ -26,6 +26,20 @@ export const createBossRepo = async (client: PoolClient, data: RegisterBossDTO, 
         businessId
     ]);
 };
+
+export const createEmployeeRepo = async (data: RegisterEmployeeDTO, hashedPass: string) => {
+    const query = `
+        INSERT INTO employee (name, lastname, phone, email, password, role, business_id, commission, salary) 
+        VALUES ($1, $2, $3, $4, $5, 'EMPLOYEE', NULL, 0, 0)`;
+    
+    await pool.query(query, [
+        data.name,
+        data.lastname,
+        data.phone,
+        data.email,
+        hashedPass
+    ]);
+}
 
 export const getUserByEmailRepo = async (email: string) => {
     const result = await pool.query('SELECT * FROM employee WHERE email = $1', [email]);

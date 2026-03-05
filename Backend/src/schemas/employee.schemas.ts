@@ -9,7 +9,7 @@ export const employeeSchema = z.object({
     role: z.nativeEnum(EmployeeRole),
     commission: z.number().nonnegative(),
     salary: z.number().nonnegative(),
-    businessId: z.number().positive()
+    businessId: z.number().positive().optional()
 })
 
 export const updateEmployeeSchema = employeeSchema.partial()

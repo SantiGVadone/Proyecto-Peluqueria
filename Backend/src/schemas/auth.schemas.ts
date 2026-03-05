@@ -14,6 +14,15 @@ export const registerBossSchema = z.object({
     password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
 })
 
+export const registerEmployeeSchema = z.object({
+    // Datos del Empleado
+    name: z.string().min(2, "El nombre es obligatorio"),
+    lastname: z.string().min(2, "El apellido es obligatorio"),
+    phone: z.string().min(8, "El teléfono personal es obligatorio"),
+    email: z.string().email("Email inválido"),
+    password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+})
+
 export const loginSChema = z.object({
     email: z.string().email("Email inválido"),
     password: z.string().min(1, "La contraseña es obligatoria")

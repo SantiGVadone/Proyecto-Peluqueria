@@ -1,7 +1,7 @@
 export enum EmployeeRole {
-    ADMIN = 'Admin',
-    BOSS = 'Boss',
-    EMPLOYEE = 'Employee'
+    ADMIN = 'ADMIN',
+    BOSS = 'BOSS',
+    EMPLOYEE = 'EMPLOYEE'
 }
 export interface Employee {
     id: number

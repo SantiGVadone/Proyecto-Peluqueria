@@ -1,8 +1,8 @@
 import { getAllAppointments, getAppointmentById, createAppointment, updateAppointment, deleteAppointment} from '../repository/appointment.repository'
 import { CreateAppointmentDTO, UpdateAppointmentDTO } from '../interfaces/appointment.interfaces'
 
-export const getAllAppointmentsServices = async () => {
-    const result = await getAllAppointments()
+export const getAllAppointmentsServices = async (business_id: number) => {
+    const result = await getAllAppointments(business_id)
     return result
 }
 

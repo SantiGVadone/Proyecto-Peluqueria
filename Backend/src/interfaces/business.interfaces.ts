@@ -9,8 +9,8 @@ export interface Business {
 }
 
 export type CreateBusinessDTO = Omit<Business, 'id' | 'createdAt' | 'inflow' | 'outflow'> & {
-    inflow?: number; 
-    outflow?: number;
+    inflow?: number
+    outflow?: number
 }
 
 export type UpdateBusinessDTO = Partial<CreateBusinessDTO>

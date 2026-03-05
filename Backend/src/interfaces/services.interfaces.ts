@@ -1,10 +1,10 @@
 export enum ServiceType {
-    HAIR = 'Peluqueria',
-    MANICURE = 'Manicura',
-    PEDICURE = 'Pedicura',
-    HAIR_REMOVAL = 'Depilacion',
-    MAKE_UP = 'Maquillaje',
-    MASSAGE = 'Masaje'    
+    HAIR = 'PELUQUERIA',
+    MANICURE = 'MANICURA',
+    PEDICURE = 'PEDICURA',
+    HAIR_REMOVAL = 'DEPILACION',
+    MAKE_UP = 'MAQUILLAJE',
+    MASSAGE = 'MASAJE'    
 }
 
 export interface Services {
