@@ -44,7 +44,7 @@ export const getBonusByEmployeeIdController = async (req: Request, res: Response
         const {role, business_id, id: loggedUserId} = res.locals.user
         const { id: targetEmployeeId } = req.params
 
-        if (role === 'EMPLOYEE' && loggedUserId !== Number(targetEmployeeId)) {
+        if (role === 'EMPLOYEE' && Number(loggedUserId) !== Number(targetEmployeeId)) {
             return res.status(403).json({ 
                 message: 'Acceso denegado: No puedes ver los bonos de otro empleado' 
             });
