@@ -4,7 +4,8 @@ import { getAllRecordsServices, getRecordsByIdService, getRecordsByClientIdServi
 //Get all the clients
 export const getAllRecordsController = async (_req: Request, res: Response) => {
     try{
-        const result = await getAllRecordsServices()
+        const {business_id} = res.locals.user
+        const result = await getAllRecordsServices(business_id)
         res.status(200).json(result)
     } catch (e) {
         console.error(e)
@@ -19,7 +20,8 @@ export const getRecordsByIdController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getRecordsByIdService(id)
+        const {business_id} = res.locals.user
+        const result = await getRecordsByIdService(id, business_id)
         if (!result) {
             return res.status(404).json({ message: 'Registros no encontrados'})
         }
@@ -37,7 +39,9 @@ export const getRecordsByClientIdController = async (req: Request, res: Response
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getRecordsByClientIdService(id)
+        const {business_id} = res.locals.user
+
+        const result = await getRecordsByClientIdService(id, business_id)
         if (!result) {
             return res.status(404).json({ message: 'Registros no encontrados'})
         }
@@ -56,7 +60,16 @@ export const getRecordsByEmployeeIdController = async (req: Request, res: Respon
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getRecordsByEmployeeIdService(id)
+
+        const {business_id, user_id, role} = res.locals.user
+
+        if(role !== 'ADMIN' && role !== 'BOSS' && Number(user_id) !== id){
+            return res.status(403).json({ 
+                message: 'Acceso denegado: No puedes ver los datos de otros empleados' 
+            });
+        }
+
+        const result = await getRecordsByEmployeeIdService(id, business_id)
         if (!result) {
             return res.status(404).json({ message: 'Registros no encontrados'})
         }
@@ -72,8 +85,9 @@ export const getRecordsByEmployeeIdController = async (req: Request, res: Respon
 export const createRecordsController = async (req: Request, res: Response) => {
     try{
         const data = res.locals.validatedBody ?? req.body
-        //si estoy aca es porque ya valide los datos
-        const newRecords = await createRecordsService(data)
+        const { business_id} = res.locals.user
+
+        const newRecords = await createRecordsService(data,business_id)
         res.status(201).json(newRecords)
 
     }catch (e) {
@@ -93,7 +107,9 @@ export const updateRecordsController = async (req: Request, res: Response) => {
         // Validar los datos de entrada
         const data = res.locals.validatedBody ?? req.body
 
-        const updatedRecords = await updateRecordsService(id , data)
+        const {business_id} = res.locals.user
+
+        const updatedRecords = await updateRecordsService(id, data, business_id)
 
         if (!updatedRecords) {
             return res.status(404).json({ message: 'Registro no encontrado' })
@@ -113,7 +129,10 @@ export const deleteRecordsController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
         
-        const result = await deleteRecordsService(id)
+        const {business_id} = res.locals.user
+
+
+        const result = await deleteRecordsService(id, business_id)
             if(! result ) {
                 return res.status(404).json({ message: 'Registro no encontrado'})
             }
