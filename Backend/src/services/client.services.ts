@@ -1,29 +1,29 @@
 import { getAllClients, getClientById, newClient, updateClient, deleteClient} from '../repository/client.repository'
 import { CreateClientDTO, UpdateClientDTO } from '../interfaces/client.interfaces'
 
-export const getAllClientsServices = async () => {
-    const result = await getAllClients()
+export const getAllClientsServices = async (business_id: number) => {
+    const result = await getAllClients(business_id)
     return result
 }
 
-export const getClientByIdService = async (id: number) => {
-    const client = await getClientById(id)
+export const getClientByIdService = async (id: number, business_id: number) => {
+    const client = await getClientById(id, business_id)
     return client
 }
 
-export const createClientService = async (data: CreateClientDTO) => {
+export const createClientService = async (data: CreateClientDTO, business_id: number) => {
     //tengo que mandar los datos a la db
-    const result = await newClient(data)
+    const result = await newClient(data, business_id)
     return result
 }
 
-export const updateClientService = async (id:number , data: UpdateClientDTO) => {
-    const result = await updateClient(id, data)
+export const updateClientService = async (id:number , data: UpdateClientDTO, business_id: number) => {
+    const result = await updateClient(id, data, business_id)
     return result
 }
 
-export const deleteClientService = async (id:number) => {
-    const result = await deleteClient(id)
+export const deleteClientService = async (id:number, business_id: number) => {
+    const result = await deleteClient(id, business_id)
     return result
 }
 

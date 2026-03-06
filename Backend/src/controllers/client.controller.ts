@@ -4,7 +4,9 @@ import { getAllClientsServices, getClientByIdService, createClientService, updat
 //Get all the clients
 export const getAllClientsController = async (_req: Request, res: Response) => {
     try{
-        const result = await getAllClientsServices()
+        const {business_id} = res.locals.user
+
+        const result = await getAllClientsServices(business_id)
         res.status(200).json(result)
     } catch (e) {
         console.error(e)
@@ -19,7 +21,9 @@ export const getClientByIdController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getClientByIdService(id)
+        const {business_id} = res.locals.user
+
+        const result = await getClientByIdService(id, business_id)
         if (!result) {
             return res.status(404).json({ message: 'Cliente no encontrado'})
         }
@@ -35,7 +39,8 @@ export const createClientController = async (req: Request, res: Response) => {
     try{
         const data = res.locals.validatedBody ?? req.body
         //si estoy aca es porque ya valide los datos
-        const newClient = await createClientService(data)
+        const {business_id} = res.locals.user
+        const newClient = await createClientService(data,business_id)
         res.status(201).json(newClient)
 
     }catch (e) {
@@ -52,8 +57,11 @@ export const updateClientController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
         const data = res.locals.validatedBody ?? req.body
-        // Aquí iría la lógica para actualizar el cliente en la base de datos
-        const updatedClient = await updateClientService(id , data)
+        
+        const {business_id} = res.locals.user
+
+
+        const updatedClient = await updateClientService(id , data, business_id)
         if (!updatedClient) {
             return res.status(404).json({ message: 'Cliente no encontrado' })
         }
@@ -71,8 +79,9 @@ export const deleteClientController = async (req: Request, res: Response) => {
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        
-        const result = await deleteClientService(id)
+        const {business_id} = res.locals.user
+
+        const result = await deleteClientService(id, business_id)
             if(! result ) {
                 return res.status(404).json({ message: 'Cliente no encontrado'})
             }
