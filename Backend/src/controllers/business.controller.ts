@@ -17,7 +17,15 @@ export const getBusinessByIdController = async (req: Request, res: Response) => 
         if( isNaN (id)){
             return res.status(400).json({ message: 'ID invalida'})
         }
-        const result = getBusinessByIdServices(id)
+
+        const {role, business_id} = res.locals.user
+
+        if (role !== 'ADMIN' && Number(business_id) !== id) {
+            return res.status(403).json({ 
+                message: 'Acceso denegado: No puedes ver los datos de otros negocios' 
+            });
+        }
+        const result = await getBusinessByIdServices(id)
         res.status(200).json(result)
     }catch(e){
         console.error(e)
@@ -44,6 +52,14 @@ export const updateBusinessController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID invalida'})
         }
         const data = res.locals.validatedBody ?? req.body
+        
+        const {business_id, role} = res.locals.user //VALIDACIONES POR SEGURIDAD
+        if (role !== 'ADMIN' && Number(business_id) !== id) {
+            return res.status(403).json({ 
+                message: 'Acceso denegado: No puedes modificar los datos de otros negocios' 
+            });
+        }
+
         const updatedBusiness = await updateBusinessServices(id, data)
 
         return res.status(200).json(updatedBusiness)
@@ -59,6 +75,13 @@ export const deleteBusinessController = async (req: Request, res: Response) => {
         if( isNaN (id)){
             return res.status(400).json({ message: 'ID invalida'})
         }
+
+        const {business_id, role} = res.locals.user
+        if(role !== 'ADMIN' && Number(business_id) !== id){
+            return res.status(403).json({ 
+                message: 'Acceso denegado: No puedes modificar los datos de otros negocios'})
+        }
+
         const deleteBusiness = await deleteBusinessServices(id)
         if( ! deleteBusiness){
             return res.status(400).json({ message: 'Negocio no encontrado'})
