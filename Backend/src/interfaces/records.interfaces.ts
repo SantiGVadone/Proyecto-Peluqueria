@@ -7,6 +7,7 @@ export interface Records {
     description: string
     totalCost: number
     date: Date | string
+    businessId: number
 }
 
 export type CreateRecordsDTO = Omit<Records, 'id'> //el date va porque es el dia de hoy casi siempre
