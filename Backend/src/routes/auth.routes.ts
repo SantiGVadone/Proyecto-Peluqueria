@@ -13,3 +13,5 @@ router.post('/register-employee', validateBody(registerEmployeeSchema), AuthCont
 
 //ruta para el login general de dueños y empleados
 router.post ('/login', validateBody(loginSChema), AuthController.login)
+
+export default router

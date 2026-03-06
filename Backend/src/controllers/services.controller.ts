@@ -4,7 +4,8 @@ import { getAllServicesServices, getServicesByIdService, createServicesService, 
 //Get all the clients
 export const getAllServicesController = async (_req: Request, res: Response) => {
     try{
-        const result = await getAllServicesServices()
+        const {business_id} = res.locals.user
+        const result = await getAllServicesServices(business_id)
         res.status(200).json(result)
     } catch (e) {
         console.error(e)
@@ -12,14 +13,16 @@ export const getAllServicesController = async (_req: Request, res: Response) => 
     }
 }
 
-//Get a Services by Id
+//Get a Services by Id  
 export const getServicesByIdController = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id as string, 10)
         if (isNaN(id)) {
             return res.status(400).json({ message: 'ID inválido'})
         }
-        const result = await getServicesByIdService(id)
+        const {business_id} = res.locals.user
+
+        const result = await getServicesByIdService(id, business_id)
         if (!result) {
             return res.status(404).json({ message: 'Servicio no encontrado'})
         }
@@ -35,8 +38,9 @@ export const createServicesController = async (req: Request, res: Response) => {
     try{
         const data = res.locals.validatedBody ?? req.body
 
-        //si estoy aca es porque ya valide los datos
-        const newServices = await createServicesService(data)
+        const {business_id} = res.locals.user
+
+        const newServices = await createServicesService(data, business_id)
         res.status(201).json(newServices)
 
     }catch (e) {
@@ -55,7 +59,9 @@ export const updateServicesController = async (req: Request, res: Response) => {
         // Validar los datos de entrada
         const data = res.locals.validatedBody ?? req.body
 
-        const updatedServices = await updateServicesService(id , data)
+        const {business_id} = res.locals.user
+
+        const updatedServices = await updateServicesService(id , data, business_id)
         if (!updatedServices) {
             return res.status(404).json({ message: 'Servicio no encontrado' })
         }
@@ -74,7 +80,9 @@ export const deleteServicesController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'ID inválido'})
         }
         
-        const result = await deleteServicesService(id)
+        const {business_id} = res.locals.user
+
+        const result = await deleteServicesService(id, business_id)
             if(! result ) {
                 return res.status(404).json({ message: 'Servicio no encontrado'})
             }
