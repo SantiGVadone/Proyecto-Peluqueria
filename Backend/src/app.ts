@@ -15,7 +15,7 @@ const app = express()
 
 // Middlewares
 app.use(corsMiddleware)
-app.use(express.json()); // Para que entienda los bodies en formato JSON
+app.use(express.json());
 
 // Rutas
 app.use('/api/business',businessRoutes)

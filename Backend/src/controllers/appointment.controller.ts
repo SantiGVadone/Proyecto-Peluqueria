@@ -35,7 +35,7 @@ export const createAppointmentController = async ( req: Request, res: Response) 
         const data = res.locals.validatedBody ?? req.body
         const business_id = res.locals.user
         // aca los datos ya estan validados 
-        const result = createAppointmentServices(data, business_id)
+        const result = await createAppointmentServices(data, business_id)
         return res.status(201).json(result)
     }catch (e){
         console.error(e)
@@ -54,7 +54,7 @@ export const updateAppointmentController = async (req: Request, res: Response) =
 
         const {business_id} = res.locals.user
 
-        const updatedAppointment = updateAppointmentServices (id, business_id, data)
+        const updatedAppointment = await updateAppointmentServices (id, business_id, data)
         return updatedAppointment
     }catch (e) {
         console.error(e)
@@ -70,7 +70,7 @@ export const deleteAppointmentController = async (req: Request, res: Response) =
         }
         const business_id = res.locals.user
 
-        const deleteResult = deleteAppointmentServices(id, business_id)
+        const deleteResult = await deleteAppointmentServices(id, business_id)
         return deleteResult
 
     }catch(e){
