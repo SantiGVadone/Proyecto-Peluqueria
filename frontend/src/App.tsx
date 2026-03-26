@@ -1,8 +1,15 @@
-import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { Login } from './pages/Login'
+import { Register } from './pages/Register'
 
 function App() {
   return (
-  <h1>FrontEnd de Proyecto Peluqueria</h1>
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+
+      <Route path='*' element={<Navigate to='/login' />} />
+    </Routes>
   )
 }
 

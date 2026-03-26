@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import api from './api/axios'
+import api from '../api/axios'
+import { useAuth } from '../hooks/useAuth'
+import axios from 'axios'
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,26 +9,28 @@ export const Login = () => {
     password: '',
   })
 
+  const { login } = useAuth()
+
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       // envio la info a la api
       const response = await api.post('/auth/login', formData)
-      console.log('Login exitoso:', response.data)
 
-      const { token, user } = response.data
+      const { token } = response.data.response
 
-      //importantisimo hay que guardar el token en el LocalStorage
-      localStorage.setItem('token', token)
+      login(token)
 
-      alert(`Bienvenido de nuevo: ${user}`)
-
-      console.log('Datos:', formData)
-    } catch (error: any) {
+      console.log(`login exitoso`)
+    } catch (error: unknown) {
       //el eslint jode con el error tipo any
-      const errorMsg =
-        error.response?.data?.message || 'Error al conectar con el servidor'
-      console.log('Error en el login:', errorMsg)
+      let errorMsg = 'Error al conectar con el servidor'
+
+      if (axios.isAxiosError(error)) {
+        errorMsg = error.response?.data?.message || errorMsg
+      }
+
+      console.error('Error en el login:', errorMsg)
       alert(errorMsg)
     }
   }
