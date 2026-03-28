@@ -2,6 +2,10 @@ import { useState } from 'react'
 import api from '../api/axios'
 import { useAuth } from '../hooks/useAuth'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+import logo from '../assets/logo.png'
+
+import './Login.css'
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +46,7 @@ export const Login = () => {
 
   return (
     <div className='login-container'>
+      <img src={logo} alt='Login' className='logo' />
       <form onSubmit={handleSubmit}>
         <h2>Iniciar Sesion</h2>
         <input
@@ -60,7 +65,7 @@ export const Login = () => {
           value={formData.password}
           required
         />
-
+        <Link to='/register'>¿No tienes cuenta? Regístrate</Link>
         <button type='submit'>Entrar</button>
       </form>
     </div>
