@@ -1,0 +1,71 @@
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1e1e1e;
+    border-top: 1px solid #2d2d2d;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 80;
+    border-radius: 15px 15px 0 0;
+    min-height: 50px;
+
+}
+
+.calendar {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+.calendar:hover {
+    color: #3b82f6;
+}
+.calendar.active {
+    color: #3b82f6;
+}
+
+.actions {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+.actions:hover {
+    color: #3b82f6;
+}
+.actions.active {
+    color: #3b82f6;
+}
+
+.dashboard {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+.dashboard:hover {
+    color: #3b82f6;
+}
+.dashboard.active {
+    color: #3b82f6;
+}
+
+.metrics {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+.metrics:hover {
+    color: #3b82f6;
+}
+.metrics.active {
+    color: #3b82f6;
+}
+
+.profile {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+.profile:hover {
+    color: #3b82f6;
+}
+.profile.active {
+    color: #3b82f6;
+}

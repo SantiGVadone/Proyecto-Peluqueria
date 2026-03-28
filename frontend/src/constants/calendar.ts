@@ -1,6 +1,2 @@
-export const CALENDAR_CONFIG = {
-  START_HOUR: 10,
-  END_HOUR: 19,
-  SLOT_HEIGHT: 80, // Pixeles
-  TIME_COLUMN_WIDTH: 64,
-}
+export const START_HOUR = 10
+export const END_HOUR = 19
