@@ -1,9 +1,12 @@
 import { useReducer } from 'react'
+import api from '../api/axios'
+import { Link } from 'react-router-dom'
 import {
   registerReducer,
   registerInitialState,
 } from '../reducers/registerReducer'
-import api from '../api/axios'
+
+import './Register.css'
 
 export const Register = () => {
   const [state, dispatch] = useReducer(registerReducer, registerInitialState)
@@ -35,8 +38,6 @@ export const Register = () => {
     <div className='register-container'>
       <form onSubmit={handleSubmit}>
         <h2>Crear Cuenta</h2>
-
-        {/* Checkbox Pro */}
         <label className='switch'>
           <input
             type='checkbox'
@@ -115,7 +116,12 @@ export const Register = () => {
           </div>
         )}
 
-        <button type='submit'>Registrarme</button>
+        <button className='register-button' type='submit'>
+          Registrarme
+        </button>
+        <Link to='/login' className='send-login'>
+          Ya tengo una Cuenta
+        </Link>
       </form>
     </div>
   )

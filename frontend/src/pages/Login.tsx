@@ -2,8 +2,8 @@ import { useState } from 'react'
 import api from '../api/axios'
 import { useAuth } from '../hooks/useAuth'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import { Link, useNavigate } from 'react-router-dom'
+import logo from '../assets/logo.avif'
 
 import './Login.css'
 
@@ -12,6 +12,8 @@ export const Login = () => {
     email: '',
     password: '',
   })
+
+  const navigate = useNavigate()
 
   const { login } = useAuth()
 
@@ -26,6 +28,8 @@ export const Login = () => {
       login(token)
 
       console.log(`login exitoso`)
+
+      navigate('/calendar')
     } catch (error: unknown) {
       //el eslint jode con el error tipo any
       let errorMsg = 'Error al conectar con el servidor'
@@ -65,7 +69,9 @@ export const Login = () => {
           value={formData.password}
           required
         />
-        <Link to='/register'>¿No tienes cuenta? Regístrate</Link>
+        <Link className='send-register' to='/register'>
+          ¿No tienes cuenta? Regístrate
+        </Link>
         <button type='submit'>Entrar</button>
       </form>
     </div>

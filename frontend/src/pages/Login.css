@@ -41,6 +41,16 @@ input {
   font-size: 18px;
 }
 
+input::placeholder {
+  color: #b8b8b8;
+  opacity: 1;
+}
+
+input:focus {
+  border-color: #d1d1d1;
+  outline: none;
+}
+
 button {
   padding: 12px;
   background-color: #4a90e2;
@@ -50,6 +60,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 18px;
+  
 }
 
 a {

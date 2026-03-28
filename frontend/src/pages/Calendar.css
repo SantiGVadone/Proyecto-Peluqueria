@@ -32,7 +32,7 @@
     border-radius: 0 0 15px 15px ;
 }
 
-.calendar-date {
+.header-date {
     display: flex;
     align-items: center;
     font-size: 24px;
@@ -41,7 +41,8 @@
 
 }
 
-.calendar-header button {
+.filter-button{
+    background-color: transparent;
     color: #424B54;
     border: none;
     padding: 10px 20px;
@@ -49,6 +50,10 @@
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 20px;
+}
+
+.filter-button:hover {
+    background-color: #e0e0e0;
 }
 
 .time-line {

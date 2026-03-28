@@ -1,0 +1,110 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  padding: 40px 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #4a90e2; /* Un azul para diferenciar sección de negocio */
+  font-size: 16px;
+  margin: 15px 0 5px 0;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+/* El "tilde" normal */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ddd;
+  font-size: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4a90e2;
+}
+
+input:not([type="checkbox"]) {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #262626;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #4a90e2;
+}
+
+.boss-fields, .employee-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.4s ease;
+}
+
+.register-button {
+  margin-top: 10px;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4a90e2;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register-button:hover {
+  background-color: #357abd;
+}
+
+.send-login {
+  text-align: center;
+  border-radius: 8px;
+  border: none;
+  color: #ddd;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s;
+  text-decoration: underline;
+}
+
+.send-login:hover {
+  color: #4a90e2;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
