@@ -1,4 +1,39 @@
-.page  {
-    display: flex;
-    background-color: #f0f0f0;
+.main-layout {
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    height: 90vh; /* Que no pegue arriba y abajo */
+    border-radius: 40px;
+    border: 8px solid #333; /* Un "bezel" de celular */
+  }
+}
+
+.app-container {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+.app-container::-webkit-scrollbar {
+  display: none;
+}
+
+.app-container{
+    -ms-scroll-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }

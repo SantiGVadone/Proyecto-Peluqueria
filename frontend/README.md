@@ -27,10 +27,15 @@
 - ✅ Darle estilo al Header
 - ✅ Crear las slotHour de la time line
 - ✅ Darle diseño a los SlotHour
--  Crear la TimeLine
--  Darle diseño a la Timeline
+- ✅ Crear la TimeLine
+- ✅ Darle diseño a la Timeline
 -  Crear las AppointmentsCards
 -  Darle diseño a las AppointmentsCards
 -  Crear el menu de 'Seleccion de fecha'
 -  Darle estilo al menu
 -  Estilar toda la pagina en conjunto
+
+
+# Pestaña Actions
+-  Diseñar en figma.
+- Acorde a lo diseñado en figma seran las otras tareas.

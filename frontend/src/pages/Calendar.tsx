@@ -1,14 +1,16 @@
-import { Navbar } from '../components/Navbar'
 import { FilterIcon } from 'lucide-react'
 import './Calendar.css'
 import { Timeline } from '../components/Timeline'
+import { useAuth } from '../hooks/useAuth'
 
 export const Calendar = () => {
+  const { user } = useAuth()
+  console.log('Usuario autenticado:', user)
   return (
     <div className='calendar-page'>
       <div className='calendar-header'>
-        <div></div>
-        <h2 className='header-date'>27-03-2026</h2>
+        <div></div> {/* Espacio para centrar el título */}
+        <h2 className='header-date'>27 de Marzo</h2>
         <button
           className='filter-button'
           // onClick={handleFilterClick}
@@ -19,8 +21,6 @@ export const Calendar = () => {
       <div className='time-line'>
         <Timeline />
       </div>
-
-      <Navbar />
     </div>
   )
 }

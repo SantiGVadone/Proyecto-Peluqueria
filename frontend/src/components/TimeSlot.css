@@ -1,15 +1,15 @@
 .dark {
-    background-color: #d2d2d2;
-    color: #1e1e1e;
+    background-color: #252a2f;
+    color: #d2d2d2;
     height: 50px;
     width: 100%;
 }
 
 .light {
-    background-color: #ededed;
-    color: #1e1e1e;
+    background-color: #333840;
+    color: #d2d2d2;
     height: 50px;
-    border-bottom: 2px solid #bebebe;
+    border-bottom: 2px solid #2b2f36;
 }
 
 .time {
@@ -23,5 +23,5 @@
     font-size: 20px;
     padding-top: 0px;
     padding-right: 10px;
-    color: #1e1e1ec5;
+    color: #d2d2d2bb;
 }
