@@ -27,11 +27,8 @@ export const Login = () => {
 
       login(token)
 
-      console.log(`login exitoso`)
-
-      navigate('/calendar')
+      navigate('/calendar') //pag principal despues del login
     } catch (error: unknown) {
-      //el eslint jode con el error tipo any
       let errorMsg = 'Error al conectar con el servidor'
 
       if (axios.isAxiosError(error)) {
@@ -39,7 +36,6 @@ export const Login = () => {
       }
 
       console.error('Error en el login:', errorMsg)
-      alert(errorMsg)
     }
   }
 
