@@ -37,5 +37,8 @@
 
 
 # Pestaña Actions
--  Diseñar en figma.
-- Acorde a lo diseñado en figma seran las otras tareas.
+- ✅ Diseñar en figma.
+- ✅ Crear un carrusel con las opciones mas usadas.
+- ✅ Darle estilo al carrusel.
+-  Crear menus para cada una de las opciones necesarias ( Clientes, Turnos, Bonos, etc).
+-  Darle estilo a los menus.
