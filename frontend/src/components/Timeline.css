@@ -9,6 +9,10 @@
     display: block;
 }
 
+.day-section {
+  width: 100%;
+}
+
 .day-footer{
     display: flex;
     flex-direction: row;

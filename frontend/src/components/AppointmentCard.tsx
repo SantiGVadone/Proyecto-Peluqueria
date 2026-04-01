@@ -1,5 +1,4 @@
 import {
-  SLOT_HEIGHT_PX,
   HOUR_HEIGHT_PX,
   START_HOUR,
   serviceIcons,
@@ -20,13 +19,14 @@ export const AppointmentCard = ({
   durationMinutes,
   state,
 }: AppointmentCardProps) => {
-  const cardHeight = (durationMinutes / SLOT_HEIGHT_PX) * HOUR_HEIGHT_PX
+  const cardHeight = (durationMinutes / 60) * HOUR_HEIGHT_PX
 
   const cardPos =
     (parseInt(startTime.split(':')[0]) -
       START_HOUR +
       parseInt(startTime.split(':')[1]) / 60) *
-    HOUR_HEIGHT_PX
+      HOUR_HEIGHT_PX +
+    60
 
   const IconComponent = serviceIcons[service as ServiceType]
 

@@ -1,19 +1,40 @@
 import { TimeSlot } from './TimeSlot'
-import { START_HOUR, END_HOUR } from '../constants/calendar'
-import { generateTimeSlots } from '../utils/calendarUtils'
+import { generateCalendarDays } from '../utils/calendarUtils'
 import './Timeline.css'
+import { AppointmentCard } from './AppointmentCard'
 
-const slots = generateTimeSlots(START_HOUR, END_HOUR)
+const DIAS_DE_VISTA = 7 //vamos a generar una semana por ahora
 
-export const Timeline = () => {
+interface TimelineProps {
+  date: Date
+}
+
+export const Timeline = ({ date }: TimelineProps) => {
+  const calendarData = generateCalendarDays(date, DIAS_DE_VISTA)
   return (
     <div className='timeline'>
-      {slots.map((slot, index) => {
-        return <TimeSlot key={index} time={slot} isDark={index % 2 === 0} />
-      })}
-      <div className='day-footer'>
-        <span>Sábado 27-03 </span>
-      </div>
+      {calendarData.map((day, dayIndex) => (
+        <div key={dayIndex} className='day-section'>
+          <div className='day-footer'>
+            <span>{day.dateLabel}</span>
+          </div>
+          {day.slots.map((slot, slotIndex) => (
+            <TimeSlot
+              key={slotIndex}
+              time={slot}
+              isDark={slotIndex % 2 === 0}
+            />
+          ))}
+          {/*Aca se mapean las AppointmentCard de ESTE DIA */}
+          <AppointmentCard
+            clientName='Santiago'
+            service='PELUQUERIA'
+            startTime='11:00'
+            durationMinutes={60}
+            state='PENDING'
+          />
+        </div>
+      ))}
     </div>
   )
 }

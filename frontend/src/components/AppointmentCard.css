@@ -6,10 +6,10 @@
   
   display: flex;
   flex-direction: column;
-  justify-content: space-around; /* startTime arriba, info al medio, endTime abajo */
+  justify-content: space-between; /* startTime arriba, info al medio, endTime abajo */
   align-items: center;
   
-  padding: 2px 4px;
+  padding: 3px 4px;
   border-radius: 10px;
   box-sizing: border-box; /* Evita que el padding sume altura al height del JS */
   
@@ -33,8 +33,8 @@
 
 /* Reset de todos los párrafos adentro de la card */
 [class^="appointment-card-"] p {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   color: #1a1a1a; /* Texto oscuro para que se lea bien sobre los pasteles */
   font-family: 'Inter', sans-serif; /* O la que estés usando */
   text-align: center;
@@ -45,7 +45,8 @@
 [class^="appointment-card-"] > p:last-child {
   font-size: 10px !important; /* Estaba en 14px, bajalo a 10px */
   font-weight: 600; /* Un poquito más de peso para que se lea */
-  opacity: 0.6;    /* Que no robe tanto protagonismo */
+  line-height: 1;
+  opacity: 0.7;    /* Que no robe tanto protagonismo */
   margin: 0 !important;
 }
 
@@ -55,9 +56,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0px;
-  margin: 2px 0;
+  flex: 1;
+  gap: 1px;
   overflow: hidden;
+  width: 100%;
 }
 
 .icon {
