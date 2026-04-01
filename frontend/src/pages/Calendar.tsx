@@ -2,6 +2,7 @@ import { FilterIcon } from 'lucide-react'
 import './Calendar.css'
 import { Timeline } from '../components/Timeline'
 import { useAuth } from '../hooks/useAuth'
+import { AppointmentCard } from '../components/AppointmentCard'
 
 export const Calendar = () => {
   const { user } = useAuth()
@@ -20,6 +21,13 @@ export const Calendar = () => {
       </div>
       <div className='time-line'>
         <Timeline />
+        <AppointmentCard
+          clientName='Santiago'
+          service='PELUQUERIA'
+          startTime='11:00'
+          durationMinutes={60}
+          state='PENDING'
+        />
       </div>
     </div>
   )

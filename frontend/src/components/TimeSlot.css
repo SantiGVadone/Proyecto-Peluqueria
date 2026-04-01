@@ -25,3 +25,8 @@
     padding-right: 10px;
     color: #d2d2d2bb;
 }
+
+.slot{
+    height: 50px;
+    box-sizing: border-box;
+}

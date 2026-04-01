@@ -7,7 +7,7 @@ interface TimeSlotProps {
 
 export const TimeSlot = ({ time, isDark }: TimeSlotProps) => {
   return (
-    <div className='cosas'>
+    <div className='slots'>
       <div className={isDark ? 'dark' : 'light'}>
         <div className='time'>
           <span className='text'>{time}</span>
