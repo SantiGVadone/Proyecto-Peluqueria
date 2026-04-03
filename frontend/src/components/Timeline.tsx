@@ -11,6 +11,10 @@ interface TimelineProps {
 
 export const Timeline = ({ date }: TimelineProps) => {
   const calendarData = generateCalendarDays(date, DIAS_DE_VISTA)
+
+  //aca tendria que tener el fetch de todos los turnos del rango de dias (usando useEffect)
+  // const {appointments} = useAppointments (rangoInicio, RangoFin)
+
   return (
     <div className='timeline'>
       {calendarData.map((day, dayIndex) => (
@@ -25,14 +29,11 @@ export const Timeline = ({ date }: TimelineProps) => {
               isDark={slotIndex % 2 === 0}
             />
           ))}
-          {/*Aca se mapean las AppointmentCard de ESTE DIA */}
-          <AppointmentCard
-            clientName='Santiago'
-            service='PELUQUERIA'
-            startTime='11:00'
-            durationMinutes={60}
-            state='PENDING'
-          />
+          {/*appointmants
+            .filter((appt) => isSameDay(appt.date, day.fullDate))
+            .map((appt) => (
+              <AppointmentCard key={appt.id} {...appt} />
+            )) */}
         </div>
       ))}
     </div>
