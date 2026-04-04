@@ -19,8 +19,16 @@ export const getAppointmentByRange = async (
   business_id: number,
 ) => {
   const result = await pool.query(
-    `SELECT * FROM appointments WHERE business_id = $1 AND date BETWEEN $2 AND $3;`,
-    [business_id, fromDate, toDate],
+    `SELECT 
+    a.*, 
+    c.name AS client_name, 
+    s.name AS service_name
+    FROM appointments a
+    JOIN clients c ON a.client_id = c.id
+    JOIN services s ON a.service_id = s.id
+    WHERE a.date >= $1 AND a.date <= $2
+    AND a.business_id = $3;`,
+    [fromDate, toDate, business_id],
   )
 
   return result.rows
