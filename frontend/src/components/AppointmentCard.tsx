@@ -18,7 +18,12 @@ export const AppointmentCard = ({
   startTime,
   durationMinutes,
   status,
+  subColumn = 0,
+  totalSubColumns = 1,
 }: AppointmentCardProps) => {
+  const widthPercentage = 100 / totalSubColumns
+  const leftPosition = subColumn * widthPercentage
+
   const cardHeight = (durationMinutes / 60) * HOUR_HEIGHT_PX
 
   const cardPos =
@@ -42,8 +47,11 @@ export const AppointmentCard = ({
       className={`appointment-card-${status.toLowerCase()}`}
       style={{
         backgroundColor: backgroundColor,
-        height: `${cardHeight}px`,
+        width: `${widthPercentage}`,
+        left: `${leftPosition}`,
         top: `${cardPos}px`,
+        height: `${cardHeight}px`,
+        zIndex: 10,
       }}
     >
       <p>{startTime}</p>

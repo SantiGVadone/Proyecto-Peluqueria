@@ -19,6 +19,8 @@ export interface AppointmentCardProps {
   startTime: string
   durationMinutes: number
   status: 'COMPLETED' | 'PENDING'
+  subColumn?: number
+  totalSubColumns?: number
 }
 
 export const serviceColors = {

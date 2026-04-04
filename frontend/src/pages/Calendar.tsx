@@ -1,11 +1,9 @@
 import { FilterIcon } from 'lucide-react'
 import './Calendar.css'
 import { Timeline } from '../components/Timeline'
-import { useAuth } from '../hooks/useAuth'
 import { useState } from 'react'
 
 export const Calendar = () => {
-  const { user } = useAuth()
   const [selectedDate, setSelecetedDate] = useState(new Date())
 
   const handleDateChange = (days: number) => {
@@ -14,7 +12,6 @@ export const Calendar = () => {
     setSelecetedDate(newDate)
   }
 
-  console.log('Usuario autenticado:', user)
   return (
     <div className='calendar-page'>
       <div className='calendar-header'>
@@ -29,7 +26,8 @@ export const Calendar = () => {
           className='filter-button'
           //onClick={ handleDateChange }
         >
-          <FilterIcon size={30} />
+          <FilterIcon size={30} />{' '}
+          {/*esto hay que cambiarlo quiero que sea un calendario, no un filter*/}
         </button>
       </div>
       <div className='time-line'>

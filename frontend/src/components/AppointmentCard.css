@@ -1,8 +1,6 @@
 /* Usamos este selector para que aplique a cualquier estado (pending, completed, etc) */
 [class^="appointment-card-"] {
   position: absolute; /* FUNDAMENTAL: para que el 'top' del JS funcione */
-  left: 75px;        /* Espacio para que no tape la columna de las horas */
-  right: 15px;       /* Margen derecho para que no pegue al borde del celu */
   
   display: flex;
   flex-direction: column;
@@ -20,8 +18,6 @@
   transition: transform 0.2s ease;
   z-index: 10;
 
-
-  width: 20%;
   min-height: 0;
 }
 
