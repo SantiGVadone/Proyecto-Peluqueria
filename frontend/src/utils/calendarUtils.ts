@@ -6,7 +6,7 @@ export const generateCalendarDays = (
 ) => {
   const days = []
 
-  for (let i = 0; i < daysToGenerate; i++) {
+  for (let i = -4; i < daysToGenerate; i++) {
     // CLAVE: Creamos una copia de la fecha de inicio y le sumamos i días
     const date = new Date(startDate)
     date.setDate(startDate.getDate() + i)

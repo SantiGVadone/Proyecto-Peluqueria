@@ -4,7 +4,7 @@ import {
   serviceIcons,
   type AppointmentCardProps,
   serviceColors,
-  stateColors,
+  statusColors,
   calculateEndTime,
 } from '../constants/calendar'
 
@@ -17,7 +17,7 @@ export const AppointmentCard = ({
   service,
   startTime,
   durationMinutes,
-  state,
+  status,
 }: AppointmentCardProps) => {
   const cardHeight = (durationMinutes / 60) * HOUR_HEIGHT_PX
 
@@ -31,15 +31,15 @@ export const AppointmentCard = ({
   const IconComponent = serviceIcons[service as ServiceType]
 
   const backgroundColor =
-    state === 'COMPLETED'
-      ? stateColors.COMPLETED
+    status === 'COMPLETED'
+      ? statusColors.COMPLETED
       : serviceColors[service as ServiceType]
 
   const endTime = calculateEndTime(startTime, durationMinutes)
 
   return (
     <div
-      className={`appointment-card-${state.toLowerCase()}`}
+      className={`appointment-card-${status.toLowerCase()}`}
       style={{
         backgroundColor: backgroundColor,
         height: `${cardHeight}px`,

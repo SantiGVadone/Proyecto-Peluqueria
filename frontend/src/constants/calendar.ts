@@ -18,7 +18,7 @@ export interface AppointmentCardProps {
   service: 'PELUQUERIA' | 'MANICURA' | 'PEDICURA'
   startTime: string
   durationMinutes: number
-  state: 'COMPLETED' | 'PENDING'
+  status: 'COMPLETED' | 'PENDING'
 }
 
 export const serviceColors = {
@@ -27,7 +27,7 @@ export const serviceColors = {
   PEDICURA: '#90EE90',
 }
 
-export const stateColors = {
+export const statusColors = {
   COMPLETED: '#D3D3D3',
   PENDING: 'transparent',
 }
