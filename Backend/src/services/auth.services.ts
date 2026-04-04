@@ -54,6 +54,7 @@ export const loginService = async (data: LoginDTO) => {
   return {
     token,
     user: {
+      id: user.id,
       name: user.name,
       role: user.role,
       business_id: user.business_id,
