@@ -1,6 +1,6 @@
 import { FilterIcon } from 'lucide-react'
 import './Calendar.css'
-import { Timeline } from '../components/Timeline'
+import { Timeline } from '../components/Calendar/Timeline'
 import { useState } from 'react'
 
 export const Calendar = () => {

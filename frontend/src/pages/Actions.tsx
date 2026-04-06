@@ -1,5 +1,5 @@
 import { Navbar } from '../components/Navbar'
-import { QuickActions } from '../components/QuickActions'
+import { QuickActions } from '../components/Actions/QuickActions'
 import { useState } from 'react'
 import './Actions.css'
 
@@ -49,6 +49,27 @@ export const Actions = () => {
               <button className='action-sub-button'>Buscar Turno</button>
               <button className='action-sub-button'>Actualizar Turno</button>
               <button className='action-sub-button'>Eliminar Turno</button>
+            </div>
+          )}
+        </div>
+        <div
+          className={`accordion-item ${activeMenu === 'historial' ? 'open' : ''}`}
+        >
+          <div
+            className='accordion-header'
+            onClick={() => toggleMenu('historial')}
+          >
+            <span>Historial</span>
+            <span className='arrow'>▶</span>
+          </div>
+          {activeMenu === 'historial' && (
+            <div className='accordion-body'>
+              <button className='action-sub-button'>Nuevo Historial</button>
+              <button className='action-sub-button'>Buscar Historial</button>
+              <button className='action-sub-button'>
+                Actualizar Historial
+              </button>
+              <button className='action-sub-button'>Eliminar Historial</button>
             </div>
           )}
         </div>

@@ -1,9 +1,12 @@
 import { TimeSlot } from './TimeSlot'
-import { generateCalendarDays, calculateEndTime } from '../utils/calendarUtils'
+import {
+  generateCalendarDays,
+  calculateEndTime,
+} from '../../utils/calendarUtils'
 import './Timeline.css'
 import { AppointmentCard } from './AppointmentCard'
 import { useEffect, useMemo, useState } from 'react'
-import api from '../api/axios'
+import api from '../../api/axios'
 
 const DIAS_DE_VISTA = 10 //vamos a generar 10 por ahora
 
@@ -56,7 +59,7 @@ export const Timeline = ({ date }: TimelineProps) => {
 
         // 2. Marcamos quién choca con quién
         empAppts.forEach((current, i) => {
-          current.subColumn = 0 // Por defecto va a la izquierda
+          current.subColumn = 1 // Por defecto va a la izquierda
 
           // Comparamos con los turnos anteriores del MISMO empleado
           for (let j = 0; j < i; j++) {
@@ -68,7 +71,7 @@ export const Timeline = ({ date }: TimelineProps) => {
               current.start_time <
               calculateEndTime(previous.start_time, previous.duration)
             ) {
-              current.subColumn = (previous.subColumn ?? 0) + 1
+              current.subColumn = (previous.subColumn ?? 1) + 1
             }
           }
         })
@@ -151,7 +154,7 @@ export const Timeline = ({ date }: TimelineProps) => {
                 height: '100%',
                 position: 'absolute',
                 top: 0,
-                left: 0,
+                left: '60px',
               }}
             >
               {Object.keys(dayAppointments).map((empId) => {

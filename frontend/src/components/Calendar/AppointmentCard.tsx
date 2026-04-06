@@ -6,7 +6,7 @@ import {
   serviceColors,
   statusColors,
   calculateEndTime,
-} from '../constants/calendar'
+} from '../../constants/calendar'
 
 type ServiceType = keyof typeof serviceIcons
 
@@ -18,7 +18,7 @@ export const AppointmentCard = ({
   startTime,
   durationMinutes,
   status,
-  subColumn = 0,
+  subColumn = 1,
   totalSubColumns = 1,
 }: AppointmentCardProps) => {
   const widthPercentage = 100 / totalSubColumns
