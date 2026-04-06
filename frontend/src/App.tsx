@@ -9,12 +9,13 @@ import { Profile } from './pages/Profile'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Navbar } from './components/Navbar'
 import './App.css'
+import { WelcomePage } from './pages/WelcomePage'
 
 function App() {
   const location = useLocation()
 
   // Rutas donde NO queremos navbar
-  const publicRoutes = ['/login', '/register']
+  const publicRoutes = ['/login', '/register', '/welcome']
   const hideNavbar = publicRoutes.includes(location.pathname)
 
   return (
@@ -22,6 +23,7 @@ function App() {
       <div className='app-container'>
         <Routes>
           {/* Rutas públicas */}
+          <Route path='/welcome' element={<WelcomePage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
 
@@ -35,7 +37,7 @@ function App() {
           </Route>
 
           {/* Fallback */}
-          <Route path='*' element={<Navigate to='/login' />} />
+          <Route path='*' element={<Navigate to='/welcome' />} />
         </Routes>
 
         {/* Navbar global */}
